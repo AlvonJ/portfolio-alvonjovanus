@@ -12,6 +12,14 @@ hamburger.addEventListener('click', function () {
    navMenu.classList.toggle('hidden');
 });
 
+// WHEN OUTSIDE HAMBURGER CLICKED
+window.addEventListener('click', function (e) {
+   if (e.target != hamburger && e.target != navMenu) {
+      hamburger.classList.remove('hamburger-active');
+      navMenu.classList.add('hidden');
+   }
+});
+
 ////////////////////////////////////////////////////
 // YEAR
 ////////////////////////////////////////////////////
@@ -24,12 +32,14 @@ yearEl.textContent = currentYear;
 // 2. Determine what element originated the event
 document.querySelectorAll('.links').forEach(function (el) {
    el.addEventListener('click', function (e) {
-      e.preventDefault();
-
       // Matching strategy
       if (e.target.classList.contains('link')) {
+         e.preventDefault();
          const id = e.target.getAttribute('href');
          document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+      } else if (e.target.classList.contains('to-top')) {
+         e.preventDefault();
+         document.querySelector('#home').scrollIntoView({ behavior: 'smooth' });
       }
    });
 });
@@ -41,12 +51,17 @@ document.querySelectorAll('.links').forEach(function (el) {
 const header = document.querySelector('.header');
 const headerHeight = header.getBoundingClientRect().height + 40;
 const home = document.querySelector('#home');
+const toTop = document.querySelector('#to-top');
 
 const stickyNav = function (entries) {
    const [entry] = entries;
-   entry.isIntersecting
-      ? header.classList.remove('navbar-fixed')
-      : header.classList.add('navbar-fixed');
+   if (entry.isIntersecting) {
+      header.classList.remove('navbar-fixed');
+      toTop.classList.add('hidden');
+   } else {
+      header.classList.add('navbar-fixed');
+      toTop.classList.remove('hidden');
+   }
 };
 
 const headerObserver = new IntersectionObserver(stickyNav, {
@@ -67,3 +82,32 @@ headerObserver.observe(home);
 //       header.classList.remove('navbar-fixed');
 //    }
 // };
+
+////////////////////////////////////////////////////
+// DARKMODE TOGGLE
+////////////////////////////////////////////////////
+const darkToggle = document.querySelector('#dark-toggle');
+const html = document.querySelector('html');
+
+darkToggle.addEventListener('click', function () {
+   if (darkToggle.checked) {
+      html.classList.add('dark');
+      localStorage.theme = 'dark';
+   } else {
+      html.classList.remove('dark');
+      localStorage.theme = 'light';
+   }
+});
+
+// POSITION TOGGLE DEPENDS ON MODE
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (
+   localStorage.theme === 'dark' ||
+   (!('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+) {
+   darkToggle.checked = true;
+} else {
+   document.documentElement.classList.remove('dark');
+   darkToggle.checked = false;
+}
