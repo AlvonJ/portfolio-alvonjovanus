@@ -6,6 +6,7 @@
 
 const hamburger = document.querySelector('#hamburger');
 const navMenu = document.querySelector('#nav-menu');
+const hamburgerLine = document.querySelector('.hamburger-line');
 
 hamburger.addEventListener('click', function () {
    hamburger.classList.toggle('hamburger-active');
@@ -14,7 +15,11 @@ hamburger.addEventListener('click', function () {
 
 // WHEN OUTSIDE HAMBURGER CLICKED
 window.addEventListener('click', function (e) {
-   if (e.target != hamburger && e.target != navMenu) {
+   if (
+      e.target != navMenu &&
+      e.target != hamburger &&
+      e.target != hamburgerLine
+   ) {
       hamburger.classList.remove('hamburger-active');
       navMenu.classList.add('hidden');
    }
