@@ -14,11 +14,13 @@ hamburger.addEventListener('click', function () {
 });
 
 // WHEN OUTSIDE HAMBURGER CLICKED
-window.addEventListener('click', function (e) {
+document.addEventListener('click', function (e) {
    if (
-      e.target != navMenu &&
-      e.target != hamburger &&
-      e.target != hamburgerLine
+      e.target !== navMenu &&
+      e.target !== hamburger &&
+      e.target !== hamburgerLine &&
+      hamburger.classList.contains('hamburger-active') &&
+      !navMenu.classList.contains('hidden')
    ) {
       hamburger.classList.remove('hamburger-active');
       navMenu.classList.add('hidden');
