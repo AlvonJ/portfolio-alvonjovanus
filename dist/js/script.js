@@ -6,25 +6,27 @@
 
 const hamburger = document.querySelector('#hamburger');
 const navMenu = document.querySelector('#nav-menu');
-const hamburgerLine = document.querySelector('.hamburger-line');
-
-hamburger.addEventListener('click', function () {
-   hamburger.classList.toggle('hamburger-active');
-   navMenu.classList.toggle('hidden');
-});
+const hamburgerLine = document.getElementsByClassName('hamburger-line');
 
 // WHEN OUTSIDE HAMBURGER CLICKED
-document.addEventListener('click', function (e) {
+document.body.addEventListener('click', function (e) {
    if (
       e.target !== navMenu &&
       e.target !== hamburger &&
-      e.target !== hamburgerLine &&
+      e.target !== hamburgerLine[0] &&
+      e.target !== hamburgerLine[1] &&
+      e.target !== hamburgerLine[2] &&
       hamburger.classList.contains('hamburger-active') &&
       !navMenu.classList.contains('hidden')
    ) {
       hamburger.classList.remove('hamburger-active');
       navMenu.classList.add('hidden');
    }
+});
+
+hamburger.addEventListener('click', function () {
+   hamburger.classList.toggle('hamburger-active');
+   navMenu.classList.toggle('hidden');
 });
 
 ////////////////////////////////////////////////////
