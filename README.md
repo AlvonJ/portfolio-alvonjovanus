@@ -12,7 +12,7 @@ Alvon Jovanus portfolio website to showcase the projects Alvon has created and t
 
 ## Link Website
 
-https://alvonjovanusc.netlify.app/
+https://alvonjovanuschandra.netlify.app/
 
 ## Screenshot
 
